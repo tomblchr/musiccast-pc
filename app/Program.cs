@@ -94,7 +94,24 @@ namespace app
                         return 0;
                     });
                 });
-                
+                app.Command("main/setpower", config =>
+                {
+                    config.OnExecute(() =>
+                    {
+                        var e = new SetPowerExecutor(client, IPAddress(ip), value?.Value());
+                        Console.Write(Newtonsoft.Json.JsonConvert.SerializeObject(e.Execute()));
+                        return 0;
+                    });
+                });
+                app.Command("main/setinput", config =>
+                {
+                    config.OnExecute(() =>
+                    {
+                        var e = new SetInputExecutor(client, IPAddress(ip), value?.Value());
+                        Console.Write(Newtonsoft.Json.JsonConvert.SerializeObject(e.Execute()));
+                        return 0;
+                    });
+                });
 
                 if (args == null || args.Length == 0)
                 {
@@ -108,7 +125,7 @@ namespace app
             }
             catch (Exception  e)
             {
-                Console.WriteLine($"Error: {e.Message}");
+                Console.WriteLine($"Error: {e.Message}{Environment.NewLine}{e.StackTrace}");
             }
         }
 

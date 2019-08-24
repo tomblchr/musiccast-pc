@@ -25,7 +25,17 @@ namespace app
             Console.WriteLine($"Getting features from {_ipaddress}");
             Uri u = new Uri($"http://{_ipaddress}{_pathPrefix}{Path}");
             Console.WriteLine(u.OriginalString);
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(_client.DownloadString(u));
+            string response = "not set";
+            try
+            {
+                response = _client.DownloadString(u);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response);
+            }
+            catch
+            {
+                Console.WriteLine($"Error: {response}");
+                throw;
+            }
         }
     }
 }
